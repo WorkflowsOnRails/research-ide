@@ -1,4 +1,11 @@
-<h2>Active Projects</h2>
+<h2>
+  Active Projects
+
+  <% if policy(Project.new).create? %>
+    <%= link_to "New Project", new_project_path,
+        class: 'btn pull-right btn-primary' %>
+  <% end %>
+</h2>
 
 <p>
   Recens nec extendi cepit lucis coegit aquae super peregrinum media dextra
