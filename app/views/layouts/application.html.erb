@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>re:research</title>
+    <%= stylesheet_link_tag "application", media: "all",
+        "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle"
+                data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">re:research</a>
+      </div>
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav">
+          <% if user_signed_in? %>
+          <li class="<%= nav_class_for_controller('tasks') %>">
+            <%= link_to 'Your Tasks', tasks_path %>
+          </li>
+          <li class="<%= nav_class_for_controller('projects') %>">
+            <%= link_to 'Projects', projects_path %>
+          </li>
+
+          <% if current_user.is_coordinator? %>
+            <li class="<%= nav_class_for_controller('coordinators') %>">
+              <%= link_to 'Administration', coordinators_path %>
+            </li>
+          <% end %>
+
+          <% end %>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <% if user_signed_in? %>
+            <li>
+              <%= link_to current_user.email, edit_user_registration_path,
+                  class: 'navbar-link' %>
+            </li>
+            <li>
+              <p class="navbar-text navbar-role-name">
+                (<%= current_user.role_name %>)
+              </p>
+            </li>
+            <li>
+              <%= link_to destroy_user_session_path,
+                  method: :delete, class: 'navbar-link' do %>
+                logout
+                <span class="glyphicon glyphicon-log-out"></span>
+              <% end %>
+            </li>
+          <% else %>
+            <li>
+              <%= link_to 'Sign in', new_user_session_path,
+                  class: 'navbar-link' %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="flashes">
+      <% flash.each do |level, message| %>
+        <div class="alert <%= flash_class level %>">
+          <%= message %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="body">
+      <div class="banner-header">
+        <div class="banner">
+          <h1><%= yield :banner %></h1>
+        </div>
+      </div>
+      <div class="content row">
+        <div class="col-md-12">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
