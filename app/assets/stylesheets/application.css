@@ -17,6 +17,10 @@
     margin: 0 30px;
 }
 
+.form-inline input.form-control {
+    width: 400px;
+}
+
 .button_to, .button_to div {
     display: inline;
 }
