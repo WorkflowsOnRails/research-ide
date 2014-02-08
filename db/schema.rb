@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20140208203404) do
   add_index "projects", ["owner_id"], name: "index_projects_on_owner_id"
 
   create_table "tasks", force: true do |t|
-    t.string   "type",            null: false
+    t.string   "task_type",       null: false
     t.text     "content",         null: false
     t.integer  "project_id",      null: false
     t.integer  "last_updater_id", null: false
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20140208203404) do
   end
 
   add_index "tasks", ["last_updater_id"], name: "index_tasks_on_last_updater_id"
-  add_index "tasks", ["project_id", "type"], name: "index_tasks_on_project_id_and_type", unique: true
+  add_index "tasks", ["project_id", "task_type"], name: "index_tasks_on_project_id_and_task_type", unique: true
   add_index "tasks", ["project_id"], name: "index_tasks_on_project_id"
 
   create_table "users", force: true do |t|

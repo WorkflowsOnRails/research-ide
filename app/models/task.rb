@@ -4,7 +4,7 @@ class Task < ActiveRecord::Base
   belongs_to :project
   belongs_to :last_updater, class_name: 'User'
 
-  validates :type, inclusion: { in: TYPES }
+  validates :task_type, inclusion: { in: TYPES }
   validates :content, presence: true, allow_blank: true
   validates :project_id, presence: true
   validates :last_updater_id, presence: true
