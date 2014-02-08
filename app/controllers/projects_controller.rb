@@ -1,4 +1,8 @@
 class ProjectsController < ApplicationController
+  def index
+    @projects = Project.all.includes(:last_updater)
+  end
+
   def show
     @project = find_project
     authorize @project
