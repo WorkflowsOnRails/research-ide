@@ -1,0 +1,30 @@
+<% content_for :banner do %>
+  Manage <%= @project.name %>
+
+  <% if policy(@project).destroy? %>
+    <%= button_to "Delete", project_path(@project),
+        method: :delete, class: 'btn pull-right btn-danger',
+        data: { confirm: 'Are you sure you want to delete this project?' }
+     %>
+  <% end %>
+<% end %>
+
+
+<h3>Rename Project</h3>
+<%= form_for @project, html: {class: 'form-inline'} do |f| %>
+  <div class="form-group">
+    <%= f.text_field :name, class: 'form-control',
+        placeholder: 'Enter the new name for your project' %>
+  </div>
+  <%= f.submit "Update Name", class: 'btn btn-default' %>
+<% end %>
+
+
+<h3>Manage Project Participants</h3>
+<%= form_tag({}, {class: 'form-inline'}) do |f| %>
+  <div class="form-group">
+    <%= text_field_tag :name, '', class: 'form-control',
+        placeholder: 'Enter an email address ...' %>
+  </div>
+  <%= submit_tag "Add User", class: 'btn btn-default' %>
+<% end %>

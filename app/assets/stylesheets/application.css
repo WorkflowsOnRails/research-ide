@@ -17,6 +17,15 @@
     margin: 0 30px;
 }
 
+.button_to, .button_to div {
+    display: inline;
+}
+
+h1 .btn.pull-right {
+    position: relative;
+    top: 2px;
+}
+
 .projects-table-name {
     width: 50%;
 }

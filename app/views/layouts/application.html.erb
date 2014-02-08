@@ -22,19 +22,6 @@
       <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav">
           <% if user_signed_in? %>
-          <li class="<%= nav_class_for_controller('tasks') %>">
-            <%= link_to 'Your Tasks', tasks_path %>
-          </li>
-          <li class="<%= nav_class_for_controller('projects') %>">
-            <%= link_to 'Projects', projects_path %>
-          </li>
-
-          <% if current_user.is_coordinator? %>
-            <li class="<%= nav_class_for_controller('coordinators') %>">
-              <%= link_to 'Administration', coordinators_path %>
-            </li>
-          <% end %>
-
           <% end %>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -42,11 +29,6 @@
             <li>
               <%= link_to current_user.email, edit_user_registration_path,
                   class: 'navbar-link' %>
-            </li>
-            <li>
-              <p class="navbar-text navbar-role-name">
-                (<%= current_user.role_name %>)
-              </p>
             </li>
             <li>
               <%= link_to destroy_user_session_path,

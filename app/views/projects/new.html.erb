@@ -1,0 +1,12 @@
+<% content_for :banner do %>
+  Create Project
+<% end %>
+
+<%= form_for @project do |f| %>
+  <div class="form-group">
+    <%= f.label :name, 'Project Name' %>
+    <%= f.text_field :name, class: 'form-control',
+        placeholder: 'Enter the name of your new project' %>
+  </div>
+  <%= f.submit "Create Project", class: 'btn btn-success' %>
+<% end %>
