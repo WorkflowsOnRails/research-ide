@@ -14,6 +14,7 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
     @project.owner = current_user
+    @project.last_updater = current_user
     authorize @project
     @project.save
     respond_with @project
@@ -27,6 +28,7 @@ class ProjectsController < ApplicationController
     @project = find_project
     authorize @project
     @project.update(project_params)
+    @project.last_updater = current_user
     respond_with @project
   end
 
