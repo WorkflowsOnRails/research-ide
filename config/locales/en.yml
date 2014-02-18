@@ -21,3 +21,16 @@
 
 en:
   hello: "Hello world"
+
+  task_role:
+    NONE: None
+    VIEWER: Viewer
+    EDITOR: Editor
+
+  task_type:
+    HYPOTHESIS: Hypothesis
+    LIT_REVIEW: Literature Review
+    METHOD: Method
+    RESULTS: Results
+    ANALYSIS: Analysis
+    CONCLUSIONS: Conclusions

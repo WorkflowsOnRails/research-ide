@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140208203404) do
+ActiveRecord::Schema.define(version: 20140217055444) do
 
   create_table "projects", force: true do |t|
     t.string   "aasm_state",      null: false
@@ -24,6 +24,24 @@ ActiveRecord::Schema.define(version: 20140208203404) do
 
   add_index "projects", ["last_updater_id"], name: "index_projects_on_last_updater_id"
   add_index "projects", ["owner_id"], name: "index_projects_on_owner_id"
+
+  create_table "projects_users", force: true do |t|
+    t.integer "project_id", null: false
+    t.integer "user_id",    null: false
+  end
+
+  add_index "projects_users", ["project_id", "user_id"], name: "index_projects_users_on_project_id_and_user_id", unique: true
+
+  create_table "roles", force: true do |t|
+    t.string  "name",          null: false
+    t.integer "user_id",       null: false
+    t.integer "resource_id"
+    t.string  "resource_type"
+    t.string  "value"
+  end
+
+  add_index "roles", ["name"], name: "index_roles_on_name"
+  add_index "roles", ["user_id", "resource_type", "resource_id", "name"], name: "unique_role_name_per_user_resource_pair", unique: true
 
   create_table "tasks", force: true do |t|
     t.string   "task_type",       null: false

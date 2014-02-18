@@ -16,6 +16,9 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   alias_method :destroy?, :edit?
+  alias_method :add_participant?, :edit?
+  alias_method :update_participant?, :edit?
+  alias_method :destroy_participant?, :edit?
 
   private
 

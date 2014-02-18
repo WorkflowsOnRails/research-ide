@@ -22,10 +22,43 @@
 
 
 <h3>Manage Project Participants</h3>
-<%= form_tag({}, {class: 'form-inline'}) do |f| %>
+<%= form_tag({action: 'add_participant'}, {class: 'form-inline'}) do |f| %>
   <div class="form-group">
-    <%= text_field_tag :name, '', class: 'form-control',
+    <%= text_field_tag :email, '', class: 'form-control',
         placeholder: 'Enter an email address ...' %>
   </div>
   <%= submit_tag "Add User", class: 'btn btn-default' %>
 <% end %>
+
+<div class="project-permissions">
+  <% @participants.each do |participant| %>
+    <div class="project-participant-roles">
+      <h4>
+        <%= participant.full_name %>
+        <small><%= participant.affiliation %></small>
+      </h4>
+
+      <%= form_tag({action: 'update_participant'},
+          {class: 'form-horizontal'}) do %>
+        <%= hidden_field_tag :user_id, participant.id %>
+
+        <% participant.roles.each do |role| %>
+          <div class="row form-group project-participant-role">
+            <%= role.custom_label_tag class: 'col-sm-6' %>
+            <div class="col-sm-6">
+              <%= role.custom_select_tag class: 'form-control input-xs' %>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="pull-right">
+          <%= submit_tag "Remove", name: 'destroy',
+              data: {confirm: "Are you sure you want to remove #{participant.email}?"},
+              class: 'btn btn-sm btn-warning' %>
+          <%= submit_tag "Update", name: 'update',
+              class: 'btn btn-sm btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
