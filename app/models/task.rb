@@ -4,6 +4,7 @@ class Task < ActiveRecord::Base
 
   belongs_to :project
   belongs_to :last_updater, class_name: 'User'
+  has_many :attachments, dependent: :destroy
 
   validates :task_type, inclusion: { in: TYPE.values }
   validates :content, presence: true, allow_blank: true
