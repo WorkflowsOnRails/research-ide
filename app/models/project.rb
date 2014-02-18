@@ -10,39 +10,51 @@ class Project < ActiveRecord::Base
   has_many :tasks
   has_and_belongs_to_many :participants, class_name: 'User'
 
-  aasm do
-    state :writing_hypothesis, initial: true, after_enter: :create_hypothesis
-    state :writing_literature_review, after_enter: :create_literature_review
-    state :describe_method
-    state :performing_experiment
-    state :analyze_results
-    state :drawing_conclusions
+  # Though this would be logically modelled by an after_enter callback, the
+  # project will not have been saved when that callback is called, and so the
+  # task can't be attached to the project as it lacks an ID. Unfortunately,
+  # there's no after_commit for initial states either, so we need to use an
+  # ActiveRecord hook to create the initial task instead.
+  after_create :create_hypothesis
 
-    event :writing_literature_review do
+  aasm do
+    state :writing_hypothesis, initial: true
+    state :writing_literature_review, after_enter: :create_literature_review
+    state :describing_method
+    state :gathering_data
+    state :analyzing_results
+    state :drawing_conclusions
+    state :completed
+
+    event :begin_literature_review do
       transitions from: :writing_hypothesis,
                   to: :writing_literature_review
     end
 
-    event :describe_method do
+    event :begin_method_definition do
       transitions from: :writing_literature_review,
-                  to: :describe_method
+                  to: :describing_method
     end
 
-    event :performing_experiment do
-      transitions from: :describe_method,
-                  to: :performing_experiment
+    event :begin_experiment do
+      transitions from: :describing_method,
+                  to: :gathering_data
     end
 
-    event :analyze_results do
-      transitions from: :performing_experiment,
-                  to: :analyze_results
+    event :begin_analysis do
+      transitions from: :gathering_data,
+                  to: :analyzing_results
     end
 
-    event :drawing_conclusions do
-      transitions from: :analyze_results,
+    event :begin_concluding do
+      transitions from: :analyzing_results,
                   to: :drawing_conclusions
     end
 
+    event :finish_project do
+      transitions from: :drawing_conclusions,
+                  to: :completed
+    end
   end
 
   validates :name, presence: true, allow_blank: false
@@ -98,12 +110,20 @@ class Project < ActiveRecord::Base
     end
   end
 
+  private
+
   def create_hypothesis
-    Task.new(task_type: Task::TYPES[0], project_id: id, last_updater_id: owner_id, content: "").save
+    Task.create(task_type: Task::TYPE.HYPOTHESIS,
+                project: self,
+                last_updater: self.owner,
+                content: "")
   end
 
   def create_literature_review
-    Task.new(task_type: Task::TYPES[1], project_id: id, last_updater_id: owner_id, content: "").save
+    Task.create(task_type: Task::TYPE.LIT_REVIEW,
+                project: self,
+                last_updater_id: owner_id,
+                content: "")
   end
 
 end
