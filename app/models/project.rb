@@ -1,13 +1,9 @@
 class Project < ActiveRecord::Base
   include AASM
 
-  ROLE = Enum.new(:NONE, :VIEWER, :EDITOR)
-
   belongs_to :owner, class_name: 'User'
   belongs_to :last_updater, class_name: 'User'
   has_many :tasks, dependent: :destroy
-
-  has_many :tasks
   has_and_belongs_to_many :participants, class_name: 'User'
 
   # Though this would be logically modelled by an after_enter callback, the
@@ -15,11 +11,11 @@ class Project < ActiveRecord::Base
   # task can't be attached to the project as it lacks an ID. Unfortunately,
   # there's no after_commit for initial states either, so we need to use an
   # ActiveRecord hook to create the initial task instead.
-  after_create :create_hypothesis
+  after_create :create_task_for_new_state
 
   aasm do
     state :writing_hypothesis, initial: true
-    state :writing_literature_review, after_enter: :create_literature_review
+    state :writing_literature_review, after_enter: :create_task_for_new_state
     state :describing_method
     state :gathering_data
     state :analyzing_results
@@ -61,6 +57,10 @@ class Project < ActiveRecord::Base
   validates :owner_id, presence: true
   validates :last_updater_id, presence: true
 
+  def current_task
+    Task.for_project_state(self)
+  end
+
   def owned_by?(user)
     owner_id == user.id
   end
@@ -75,29 +75,12 @@ class Project < ActiveRecord::Base
     Role.where(resource: self, user: user)
   end
 
-  def create_tasks_for(user)
-    transaction do
-      Task::TYPE.values.each do |task_type|
-        Task.create(project: self,
-                    last_updater: user,
-                    task_type: task_type,
-                    content: '')
-      end
-    end
-  end
-
   def add_participant(user)
     transaction do
       return false if self.has_participant? user
 
       self.participants << user
-
-      Task::TYPE.values.each do |task_type|
-        Role.create(resource: self,
-                    user: user,
-                    name: task_type,
-                    value: ROLE.NONE)
-      end
+      Task.create_roles_for_project(self, user)
     end
 
     true
@@ -110,20 +93,30 @@ class Project < ActiveRecord::Base
     end
   end
 
+  # Utility function to map from a target state to an event triggering entry
+  # to the target state. This is somewhat unusual for a workflow, but users
+  # interact with the system by advancing it to a specific next state, instead
+  # of performing a "next" action (as this could lead to races advancing the
+  # state several times.)
+  def enter_state(next_state)
+    # Find all events transitioning from the current state to the target state.
+    current_state = self.aasm.current_state
+    events = self.aasm.events.select do |event|
+      event.transitions.any? { |t| t.from == current_state && t.to == next_state }
+    end
+
+    if events.empty?
+      current_state = self.aasm.current_state
+      raise RuntimeError,
+            "No transition found from #{current_state} to #{state_name}"
+    end
+
+    self.send("#{events.first.name}!")
+  end
+
   private
 
-  def create_hypothesis
-    Task.create(task_type: Task::TYPE.HYPOTHESIS,
-                project: self,
-                last_updater: self.owner,
-                content: "")
+  def create_task_for_new_state
+    Task.create_for_project_state(self, self.owner)
   end
-
-  def create_literature_review
-    Task.create(task_type: Task::TYPE.LIT_REVIEW,
-                project: self,
-                last_updater_id: owner_id,
-                content: "")
-  end
-
 end

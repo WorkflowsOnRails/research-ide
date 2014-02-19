@@ -1,0 +1,24 @@
+<%= render partial: 'banner', locals: {project: @task.project} %>
+<%= render partial: 'statusbar', locals: {task: @task, advancable: false} %>
+
+<div id="task-body-edit" class="task-body">
+  <%= form_for @task do |f| %>
+    <div class="form-group">
+      <div class="task-body-editor">
+        <%= link_to '[preview]', '#', id: 'task-body-preview-link',
+            class: 'task-body-preview-link' %>
+        <%= f.text_area :content, id: 'task-body-edit-field',
+            class: 'form-control task-body-edit-field' %>
+      </div>
+      <div class="task-body-preview">
+        <%= link_to '[edit]', '#', id: 'task-body-edit-link',
+            class: 'task-body-edit-link' %>
+        <div id="task-body-preview-content"></div>
+      </div>
+    </div>
+    <div class="pull-right task-body-edit-buttons">
+      <%= link_to 'Cancel', :back, class: 'btn btn-default' %>
+      <%= f.submit 'Save', class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>

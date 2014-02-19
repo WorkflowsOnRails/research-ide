@@ -1,0 +1,30 @@
+.projects-table-name {
+    width: 50%;
+}
+.projects-table-status {
+    width: 20%;
+}
+.projects-table-last-modified {
+    width: 30%;
+}
+
+.project-participant-roles {
+    border: 1px solid #ddd;
+    display: inline-block;
+    padding: 10px 30px;
+    margin: 30px 30px 0 0;
+    width: 400px;
+
+    & > h4 {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    form {
+      margin: 16px 0;
+    }
+}
+.project-participant-role.form-group {
+    margin-bottom: 10px;
+}

@@ -14,4 +14,10 @@ ResearchIde::Application.routes.draw do
            action: :destroy_participant
     end
   end
+
+  resources :tasks, only: [:show, :edit, :update] do
+    post :preview, on: :collection
+
+    # TODO: Add attachments here.
+  end
 end

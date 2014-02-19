@@ -1,0 +1,8 @@
+<% content_for :banner do %>
+  <%= project.name %>
+
+  <% if policy(project).edit? %>
+    <%= link_to "Manage Project", edit_project_path(project),
+        class: 'btn btn-primary pull-right' %>
+  <% end %>
+<% end %>

@@ -28,9 +28,9 @@ en:
     EDITOR: Editor
 
   task_type:
-    HYPOTHESIS: Hypothesis
-    LIT_REVIEW: Literature Review
-    METHOD: Method
-    RESULTS: Results
-    ANALYSIS: Analysis
-    CONCLUSIONS: Conclusions
+    writing_hypothesis: Hypothesis
+    writing_literature_review: Literature Review
+    describing_method: Method
+    gathering_data: Results
+    analyzing_results: Analysis
+    drawing_conclusions: Conclusions

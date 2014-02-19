@@ -24,6 +24,9 @@ gem 'simple_form', '~> 3.0.0rc'
 gem 'paperclip', '~> 3.0'
 gem 'will_paginate', '~> 3.0.0'
 
+gem 'sanitize'
+gem 'kramdown'
+
 gem 'aasm_progressable', git: 'https://github.com/WorkflowsOnRails/aasm_progressable.git', branch: 'master'
 
 group :doc do

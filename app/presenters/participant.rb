@@ -26,7 +26,7 @@ class Participant
     end
 
     def custom_select_tag(**html_options)
-      role_options = Project::ROLE.values.map do |role_type|
+      role_options = Task::ROLE.values.map do |role_type|
         [I18n.t("task_role.#{role_type}"), role_type]
       end
 

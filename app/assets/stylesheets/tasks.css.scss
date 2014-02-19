@@ -1,0 +1,42 @@
+.task-body {
+    position: relative;
+
+    .task-body-edit-link {
+        position: absolute;
+        top: 4px;
+        right: 0;
+    }
+    .task-body-preview-link {
+        position: absolute;
+        top: 4px;
+        right: 12px;
+    }
+}
+
+#task-body-edit {
+  .task-body-editor {
+    display: block;
+    visibility: visible;
+  }
+  .task-body-preview {
+    display: none;
+    visibility: hidden;
+  }
+  &.preview {
+    .task-body-editor {
+      display: none;
+      visibility: hidden;
+    }
+    .task-body-preview {
+      display: block;
+      visibility: visible;
+    }
+  }
+}
+
+textarea.task-body-edit-field {
+    font-family: "Lucida Console", Monaco, monospace;
+    width: 100%;
+    height: 400px;
+    resize: vertical;
+}

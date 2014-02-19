@@ -21,6 +21,7 @@ module ResearchIde
     # config.i18n.default_locale = :de
 
     config.autoload_paths += Dir["#{Rails.root}/lib"]
+    config.i18n.enforce_available_locales = true
 
     config.generators do |g|
       g.orm             :active_record

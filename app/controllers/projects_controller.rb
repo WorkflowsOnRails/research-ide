@@ -7,9 +7,7 @@ class ProjectsController < ApplicationController
   def show
     @project = find_project
     authorize @project
-    redirect_to action: 'edit'
-
-    # TODO: redirect to current task
+    redirect_to task_path(@project.current_task)
   end
 
   def new
@@ -27,7 +25,11 @@ class ProjectsController < ApplicationController
 
   def edit
     @project = find_project
-    @participants = @project.participants.map { |u| Participant.new(@project, u) }
+    authorize @project
+    @participants = @project
+      .participants
+      .order(:full_name)
+      .map { |u| Participant.new(@project, u) }
   end
 
   def update
@@ -45,6 +47,7 @@ class ProjectsController < ApplicationController
     respond_with @project
   end
 
+  # TODO: Explain why these are not in their own controller.
   def add_participant
     project = find_project
     authorize project
