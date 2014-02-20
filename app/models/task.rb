@@ -4,7 +4,7 @@ class Task < ActiveRecord::Base
 
   belongs_to :project
   belongs_to :last_updater, class_name: 'User'
-  has_many :attachments, dependent: :destroy
+  has_many :attachments, inverse_of: :task, dependent: :destroy
 
   validates :task_type, inclusion: { in: TYPE.values }
   validates :content, presence: true, allow_blank: true
@@ -12,11 +12,11 @@ class Task < ActiveRecord::Base
   validates :last_updater_id, presence: true
 
   def has_editor?(user)
-    self.has_role?(user, ROLE.EDITOR)
+    project.owned_by?(user) || has_role?(user, ROLE.EDITOR)
   end
 
   def has_viewer?(user)
-    self.has_role?(user, [ROLE.EDITOR, ROLE.VIEWER])
+    project.owned_by?(user) || has_role?(user, [ROLE.EDITOR, ROLE.VIEWER])
   end
 
   def self.create_for_project_state(project, user)

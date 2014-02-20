@@ -4,7 +4,7 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def show?
-    project.owned_by? user
+    project.has_participant? user
   end
 
   def create?

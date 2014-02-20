@@ -1,0 +1,44 @@
+<div class="task-attachments">
+  <h4>
+    Attachments (<%= attachments.size %>)
+
+    <% if policy(Attachment.new(task: task)).create? %>
+      <%= form_for([task, Attachment.new],
+                   html: { class: 'task-attachments-upload-form' }) do |f| %>
+        <%= f.file_field :file,
+            id: 'task-attachments-upload-field',
+            class: 'hidden' %>
+        <%= link_to 'upload', '#',
+            id: 'task-attachments-upload-button',
+            class: 'btn btn-info btn-xs task-attachments-upload-button' %>
+      <% end %>
+    <% end %>
+  </h4>
+
+  <div class="task-attachments-body">
+    <% attachments.order(:file_file_name).each do |attachment| %>
+      <div class="task-attachment">
+        <%= link_to attachment.file_file_name, attachment.file.url,
+                    class: 'task-attachment-filename' %>
+        <div class="task-attachment-metadata small">
+          Uploaded <%= local_time_ago attachment.created_at %> by
+          <%= mail_to attachment.uploader.email,
+              attachment.uploader.full_name %>
+        </div>
+        <div class="task-attachment-actions">
+          <%= link_to "download (#{number_to_human_size attachment.file_file_size})",
+              attachment.file.url, class: 'btn btn-xs btn-default' %>
+          <% if policy(attachment).destroy? %>
+            <%= button_to 'delete', attachment_path(attachment),
+                method: :delete, class: 'btn btn-xs btn-default',
+                data: { confirm: 'Are you sure you want to delete this file?' }
+                %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <% if attachments.empty? %>
+      <small>No attachments have been uploaded yet.</small>
+    <% end %>
+  </div>
+</div>

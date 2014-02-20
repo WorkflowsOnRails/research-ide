@@ -5,6 +5,7 @@
 class TasksController < ApplicationController
   def show
     @task = find_task
+    @attachments = @task.attachments.order(:file_file_name).includes(:uploader)
     authorize @task
   end
 

@@ -1,0 +1,27 @@
+.task-attachments {
+    position: relative;
+
+    .task-attachments-upload-form {
+        display: inline;
+        margin-left: 30px;
+    }
+}
+
+.task-attachment {
+    display: inline-block;
+    border: 1px solid #ddd;
+    padding: 10px 14px;
+    width: 350px;
+
+    .task-attachment-filename,
+    .task-attachment-metadata {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .task-attachment-actions {
+        margin-top: 8px;
+    }
+}

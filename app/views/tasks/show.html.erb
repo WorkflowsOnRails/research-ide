@@ -1,9 +1,7 @@
 <%= render partial: 'banner', locals: {project: @task.project} %>
 <%= render partial: 'statusbar', locals: {task: @task, advancable: true} %>
-
-<div class="task-attachments">
-  <small>Some attachments will go here</small>
-</div>
+<%= render partial: 'attachments',
+           locals: {task: @task, attachments: @attachments} %>
 
 <div class="task-body">
   <%= link_to '[edit]', edit_task_path(@task),

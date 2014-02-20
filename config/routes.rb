@@ -18,6 +18,8 @@ ResearchIde::Application.routes.draw do
   resources :tasks, only: [:show, :edit, :update] do
     post :preview, on: :collection
 
-    # TODO: Add attachments here.
+    resources :attachments, only: [:create]
   end
+
+  resources :attachments, only: [:destroy]
 end
