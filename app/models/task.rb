@@ -1,5 +1,5 @@
 class Task < ActiveRecord::Base
-  TYPE = Enum.new(*(Project.aasm.states.map(&:name) - [:completed]))
+  TYPE = Enum.new(*(Project.aasm.states.map(&:name)))
   ROLE = Enum.new(:NONE, :VIEWER, :EDITOR)
 
   belongs_to :project

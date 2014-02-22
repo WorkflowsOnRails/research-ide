@@ -13,6 +13,8 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  helper AasmProgressable::Helper
+
   def configure_permitted_parameters
     extra_params = [:full_name, :affiliation]
     devise_parameter_sanitizer.for(:sign_up).push(*extra_params)

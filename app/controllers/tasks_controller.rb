@@ -5,12 +5,16 @@
 class TasksController < ApplicationController
   def show
     @task = find_task
+    @project = Project.find(@task.project_id)
+    @states = AasmProgressable::State.create_all(@project)
     @attachments = @task.attachments.order(:file_file_name).includes(:uploader)
     authorize @task
   end
 
   def edit
     @task = find_task
+    @project = Project.find(@task.project_id)
+    @states = AasmProgressable::State.create_all(@project)
     authorize @task
   end
 

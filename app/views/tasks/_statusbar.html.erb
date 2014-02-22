@@ -1,1 +1,11 @@
-<h4>Just pretend that there is a status bar here for now</h4>
+<div class="state-indicator">
+  <ol>
+    <% @states.each_with_index do |state, index| %>
+      <li class="<%= state.status %>">
+        <%= button_to "#{index + 1}. #{state.name}", enter_state_project_path(@project, state: state.name),
+                      data: { confirm: "Advance to state: #{state.name}?" } %>     
+      </li>
+    <% end %>
+  </ol>
+</div>
+

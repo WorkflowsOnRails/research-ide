@@ -47,6 +47,25 @@ class ProjectsController < ApplicationController
     respond_with @project
   end
 
+  def enter_state
+    @project = find_project
+    authorize @project
+
+    task = Task.find_by(project_id: @project.id, task_type: params[:state].parameterize.underscore.to_sym)
+    if task
+      redirect_to task_path(task)
+    else
+      begin
+        @project.enter_state(params[:state].parameterize.underscore.to_sym)
+        flash[:notice] = "Successfully advanced to state #{params[:state]}"
+      rescue
+        flash[:error] = "You cannot go to #{params[:state]} from current state!"
+      end
+      redirect_to task_path(@project.current_task)
+    end
+
+  end
+
   # TODO: Explain why these are not in their own controller.
   def add_participant
     project = find_project

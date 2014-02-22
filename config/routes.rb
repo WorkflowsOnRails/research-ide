@@ -5,6 +5,7 @@ ResearchIde::Application.routes.draw do
   resources :projects do
     member do
       post :add_participant
+      post :enter_state, action: :enter_state
 
       # Handle both an update and a remove button in the participant form
       # without if / else hackery in the controller.

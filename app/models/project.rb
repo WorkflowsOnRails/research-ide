@@ -1,5 +1,6 @@
 class Project < ActiveRecord::Base
   include AASM
+  include AasmProgressable::ModelMixin
 
   belongs_to :owner, class_name: 'User'
   belongs_to :last_updater, class_name: 'User'
@@ -16,11 +17,11 @@ class Project < ActiveRecord::Base
   aasm do
     state :writing_hypothesis, initial: true
     state :writing_literature_review, after_enter: :create_task_for_new_state
-    state :describing_method
-    state :gathering_data
-    state :analyzing_results
-    state :drawing_conclusions
-    state :completed
+    state :describing_method, after_enter: :create_task_for_new_state
+    state :gathering_data, after_enter: :create_task_for_new_state
+    state :analyzing_results, after_enter: :create_task_for_new_state
+    state :drawing_conclusions, after_enter: :create_task_for_new_state
+    state :completed, after_enter: :create_task_for_new_state
 
     event :begin_literature_review do
       transitions from: :writing_hypothesis,
@@ -52,6 +53,9 @@ class Project < ActiveRecord::Base
                   to: :completed
     end
   end
+
+  aasm_state_order [:writing_hypothesis, :writing_literature_review, :describing_method, 
+                    :gathering_data, :analyzing_results, :drawing_conclusions, :completed]
 
   validates :name, presence: true, allow_blank: false
   validates :owner_id, presence: true
@@ -101,14 +105,14 @@ class Project < ActiveRecord::Base
   def enter_state(next_state)
     # Find all events transitioning from the current state to the target state.
     current_state = self.aasm.current_state
-    events = self.aasm.events.select do |event|
+    events = self.class.aasm.events.values.select do |event|
       event.transitions.any? { |t| t.from == current_state && t.to == next_state }
     end
 
     if events.empty?
       current_state = self.aasm.current_state
       raise RuntimeError,
-            "No transition found from #{current_state} to #{state_name}"
+            "No transition found from #{current_state} to #{next_state}"
     end
 
     self.send("#{events.first.name}!")
