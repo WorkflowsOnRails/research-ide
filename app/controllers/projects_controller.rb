@@ -51,19 +51,15 @@ class ProjectsController < ApplicationController
     @project = find_project
     authorize @project
 
-    task = Task.find_by(project_id: @project.id, task_type: params[:state].parameterize.underscore.to_sym)
-    if task
-      redirect_to task_path(task)
-    else
-      begin
-        @project.enter_state(params[:state].parameterize.underscore.to_sym)
-        flash[:notice] = "Successfully advanced to state #{params[:state]}"
-      rescue
-        flash[:error] = "You cannot go to #{params[:state]} from current state!"
-      end
-      redirect_to task_path(@project.current_task)
+    next_state = params[:state].to_sym
+
+    begin
+      @project.enter_state(next_state)
+    rescue
+      flash[:error] = "You cannot go to #{next_state} from current state!"
     end
 
+    redirect_to task_path(@project.current_task)
   end
 
   # TODO: Explain why these are not in their own controller.

@@ -65,6 +65,10 @@ class Project < ActiveRecord::Base
     Task.for_project_state(self)
   end
 
+  def existing_tasks
+    self.tasks.index_by(&:task_type)
+  end
+
   def owned_by?(user)
     owner_id == user.id
   end

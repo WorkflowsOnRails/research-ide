@@ -4,6 +4,7 @@
   width: 100%;
   border-collapse: separate;
   font-size: 16px;
+  margin: 16px 0;
 
   ol {
     display: table-row;
@@ -18,13 +19,24 @@
     }
   }
 
-  .complete {
-    background: #6aa3d5;
-    color: #fff;
+  .btn-link {
+    margin: 0;
+    padding: 0;
+    font-size: inherit;
   }
-  .active {
+  .active, .complete {
+    background: #6aa3d5;
+
+    a {
+      color: #fff;
+    }
+  }
+  .viewed {
     background: #357ebd;
     color: #fff;
+  }
+  .next {
+    padding-top: 2px;
   }
   .incomplete {
     background: #eae8ec;

@@ -22,6 +22,17 @@
 en:
   hello: "Hello world"
 
+  activerecord:
+    attributes:
+      project:
+        aasm_state/writing_hypothesis: Hypothesis
+        aasm_state/writing_literature_review: Literature Review
+        aasm_state/describing_method: Method
+        aasm_state/gathering_data: Results
+        aasm_state/analyzing_results: Analysis
+        aasm_state/drawing_conclusions: Conclusions
+        aasm_state/completed: Completed
+
   task_role:
     NONE: None
     VIEWER: Viewer
@@ -34,3 +45,4 @@ en:
     gathering_data: Results
     analyzing_results: Analysis
     drawing_conclusions: Conclusions
+    completed: Completed
