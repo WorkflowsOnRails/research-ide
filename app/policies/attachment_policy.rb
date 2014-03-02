@@ -1,7 +1,7 @@
 # @author Brendan MacDonell
 class AttachmentPolicy < ApplicationPolicy
   def create?
-    attachment.task.has_editor?(user)
+    TaskPolicy.new(user, attachment.task).edit?
   end
 
   alias_method :destroy?, :create?
