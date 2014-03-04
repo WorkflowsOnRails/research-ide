@@ -1,15 +1,74 @@
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path('../../config/environment', __FILE__)
-require 'rails/test_help'
 
-class ActiveSupport::TestCase
+require 'rails/test_help'
+require 'minitest/autorun'
+require 'capybara/dsl'
+require 'capybara/rails'
+
+
+SimpleCov.start
+
+
+class MiniTest::Unit::TestCase
+  include FactoryGirl::Syntax::Methods
+end
+
+
+module TestHelper
   ActiveRecord::Migration.check_pending!
 
-  # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
-  #
-  # Note: You'll currently still have to declare fixtures explicitly in integration tests
-  # -- they do not yet inherit this setting
-  fixtures :all
+  extend ActiveSupport::Concern
+  include Capybara::DSL
 
-  # Add more helper methods to be used by all tests here...
+  included do
+    setup :setup_database
+  end
+
+  def setup_database
+    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.clean_with(:truncation)
+    DatabaseCleaner.start
+  end
+
+  def teardown
+    DatabaseCleaner.clean
+  end
+
+  def refresh_page
+    visit current_url
+  end
+
+  module Users
+    extend ActiveSupport::Concern
+
+    included do
+      setup :setup_users
+    end
+
+    def setup_users
+      # Keep track of the attributes so that we have access to the password
+      @user_attrs = attributes_for(:user)
+      @user = User.create(@user_attrs)
+    end
+
+    def login_user
+      login_with_attrs @user_attrs
+    end
+
+    def logout
+      click_on 'logout'
+    end
+
+    private
+
+    def login_with_attrs attrs
+      visit '/'
+      within 'form#new_user' do
+        fill_in 'Email', with: attrs[:email]
+        fill_in 'Password', with: attrs[:password]
+        click_on 'Sign in'
+      end
+    end
+  end
 end
