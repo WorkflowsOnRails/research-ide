@@ -15,4 +15,8 @@
 /log/*.log
 /tmp
 
+#ignore coverage tempfiles
+/coverage/*
+
+
 public/
