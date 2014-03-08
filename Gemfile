@@ -27,6 +27,11 @@ gem 'will_paginate', '~> 3.0.0'
 gem 'sanitize'
 gem 'kramdown'
 
+gem 'high_voltage', '~> 2.1.0'
+
+gem 'rack_dav', git: 'https://github.com/WorkflowsOnRails/rack_dav.git',
+                branch: 'bc344eaed13068960ecd606aaa2e88e96470542f'
+
 gem 'aasm_progressable', git: 'https://github.com/WorkflowsOnRails/aasm_progressable.git', branch: 'master'
 
 group :doc do

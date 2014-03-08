@@ -122,6 +122,11 @@ class Project < ActiveRecord::Base
     self.send("#{events.first.name}!")
   end
 
+  def touch!
+    self.updated_at = Time.now
+    self.save!
+  end
+
   private
 
   def create_task_for_new_state

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140218050856) do
+ActiveRecord::Schema.define(version: 20140309005413) do
 
   create_table "attachments", force: true do |t|
     t.string   "file_file_name"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20140218050856) do
     t.datetime "updated_at"
   end
 
+  add_index "attachments", ["task_id", "file_file_name"], name: "index_attachments_on_task_id_and_file_file_name", unique: true
   add_index "attachments", ["task_id"], name: "index_attachments_on_task_id"
   add_index "attachments", ["uploader_id"], name: "index_attachments_on_uploader_id"
 
@@ -58,12 +59,13 @@ ActiveRecord::Schema.define(version: 20140218050856) do
   add_index "roles", ["user_id", "resource_type", "resource_id", "name"], name: "unique_role_name_per_user_resource_pair", unique: true
 
   create_table "tasks", force: true do |t|
-    t.string   "task_type",       null: false
-    t.text     "content",         null: false
-    t.integer  "project_id",      null: false
-    t.integer  "last_updater_id", null: false
+    t.string   "task_type",            null: false
+    t.text     "content",              null: false
+    t.integer  "project_id",           null: false
+    t.integer  "last_updater_id",      null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "cached_latex_content"
   end
 
   add_index "tasks", ["last_updater_id"], name: "index_tasks_on_last_updater_id"

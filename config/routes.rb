@@ -23,4 +23,17 @@ ResearchIde::Application.routes.draw do
   end
 
   resources :attachments, only: [:destroy]
+
+  # Handle serving attachments with RackDAV:
+  dav = RackDAV::Handler.new(
+    root: '/tmp/',
+    resource_class: DispatcherResource,
+  )
+  dav_with_auth = Rack::Auth::Basic.new(dav) do |username, password|
+    user = User.find_for_authentication(:email => username)
+    user && user.valid_password?(password)
+  end
+  mount dav_with_auth, at: "/files/"
+
+  get 'webdav' => 'high_voltage/pages#show', id: 'webdav'
 end

@@ -1,0 +1,200 @@
+<% content_for :banner do %>
+  Managing Data using WebDAV
+<% end %>
+
+<p>
+  re:research uses WebDAV to let you interact with tasks and attachments the
+  same way you manage files on your own computer.
+</p>
+<p>
+  Select your operating system for instructions on getting started.
+</p>
+
+<div class="spacer"></div>
+
+<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#os-x">
+          OS X
+        </a>
+      </h4>
+    </div>
+    <div id="os-x" class="panel-collapse collapse in">
+      <div class="panel-body">
+        <ol>
+          <li>Open Finder</li>
+          <li>In the "Go" menu, select "Connect to Server".</li>
+          <li>
+            Enter <code><%= webdav_url_with_http_scheme %></code> in
+            the "Server Address" field, and click "Connect".
+          </li>
+          <li>Enter your email address and password.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#windows-xp">
+          Windows XP
+        </a>
+      </h4>
+    </div>
+    <div id="windows-xp" class="panel-collapse collapse">
+      <div class="panel-body">
+        <ol>
+          <li>Click "Start", then "My Network Places".</li>
+          <li>Click "Add a Network Place" from the "Network Tasks" sidebar.</li>
+          <li>
+            Click "Next", select "Choose another network location", and
+            then click "Next" again.
+          </li>
+          <li>
+            Enter <code><%= webdav_url_with_http_scheme %></code>
+            in the "Internet or network address" field, and click
+            "Next".
+          </li>
+          <li>Enter your email address and password and click "OK".</li>
+          <li>
+            Enter a name for the network location, click "Next" one
+            last time, and then click "Finish".
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#windows-vista">
+          Windows Vista
+        </a>
+      </h4>
+    </div>
+    <div id="windows-vista" class="panel-collapse collapse">
+      <div class="panel-body">
+        <ol>
+          <li>
+            Open the Start Menu, select "Computer", and then click
+            "Map Network Drive".
+          </li>
+          <li>
+            Click "Connect to a Web site that you can use to store your
+            documents and pictures", and then click "Next" in the dialog
+            that pops up.
+          </li>
+          <li>
+            Select "Choose a custom network location", and click
+            "Next" again.
+          </li>
+          <li>
+            Enter <code><%= webdav_url_with_http_scheme %></code>
+            in the "Internet or network address" field, and then
+            click "Next".
+          </li>
+          <li>Enter your email address and password and click "OK".</li>
+          <li>
+            Enter a name for the network location, click "Next" one
+            last time, and then click "Finish".
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#windows-7">
+          Windows 7
+        </a>
+      </h4>
+    </div>
+    <div id="windows-7" class="panel-collapse collapse">
+      <div class="panel-body">
+        <ol>
+          <li>
+            Open the Start Menu, select "Computer", and then click
+            "Map Network Drive".
+          </li>
+          <li>
+            Enter <code><%= webdav_url_with_http_scheme %></code>
+            in the "Folder" field.
+          </li>
+          <li>
+            Check the "Reconnect at logon" and
+            "Connect using different credentials" checkboxes, and then
+            click "Finish".
+          </li>
+          <li>
+            Enter your email address and password, check the
+            "Remember my credentials" box, and click "OK".
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#windows-8">
+          Windows 8
+        </a>
+      </h4>
+    </div>
+    <div id="windows-8" class="panel-collapse collapse">
+      <div class="panel-body">
+        <ol>
+          <li>
+            Open the File Explorer. (You can perform a search for it by
+            pressing the Windows key and S.)
+          </li>
+          <li>
+            Right-click on "Computer", and click "Add a network location".
+          </li>
+          <li>
+            Click "Next", then select "Choose a custom network location", and
+            click "Next" again.
+          </li>
+          <li>
+            Enter <code><%= webdav_url_with_http_scheme %></code>
+            in the "Internet or network address" field, and then
+            click "Next".
+          </li>
+          <li>
+            Enter your email address and password, check the
+            "Remember my credentials" box, and click "OK".
+          </li>
+          <li>
+            Enter a name for the network location, click "Next" one
+            last time, and then click "Finish".
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#ubuntu">
+          Ubuntu
+        </a>
+      </h4>
+    </div>
+    <div id="ubuntu" class="panel-collapse collapse">
+      <div class="panel-body">
+        <ol>
+          <li>Open the file browser (Nautilus)</li>
+          <li>Select "Connect to Server" from the sidebar.</li>
+          <li>
+            Enter <code><%= webdav_url_with_dav_scheme %></code>
+            in the "Server Address" field, and click "Connect".
+          </li>
+          <li>Enter your email address and password.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>

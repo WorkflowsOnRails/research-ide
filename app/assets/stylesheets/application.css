@@ -36,6 +36,17 @@ select.form-control.input-xs {
     padding: 3px 5px;
 }
 
+.alert-subdued {
+    background-color: #F2F4F5;
+    border-color: #C4C6C7;
+    color: #656666;
+}
+
+.spacer {
+    display: block;
+    height: 16px;
+}
+
 @media (max-width: 480px) {
     .body {
         margin: 0;

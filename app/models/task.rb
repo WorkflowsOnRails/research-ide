@@ -11,12 +11,37 @@ class Task < ActiveRecord::Base
   validates :project_id, presence: true
   validates :last_updater_id, presence: true
 
+  after_save { |task| task.project.touch! }
+
   def has_editor?(user)
     project.owned_by?(user) || has_role?(user, ROLE.EDITOR)
   end
 
   def has_viewer?(user)
     project.owned_by?(user) || has_role?(user, [ROLE.EDITOR, ROLE.VIEWER])
+  end
+
+  # Clear the cached LaTeX content so that it will be regenerated when
+  # the cached LaTeX is next accessed.
+  def content=(new_content)
+    self.cached_latex_content = nil
+    super(new_content)
+  end
+
+  def latex_content
+    if cached_latex_content.nil?
+      as_latex = Kramdown::Document.new(content).to_latex
+      self.cached_latex_content = as_latex
+      self.save!
+    end
+
+    cached_latex_content
+  end
+
+  # Update the updated_at field in a way that triggers after_save callbacks.
+  def touch!
+    self.updated_at = Time.now
+    self.save!
   end
 
   def self.create_for_project_state(project, user)

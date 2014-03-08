@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= resource.display_name %></title>
+    <style>
+      table {
+        width: 100%;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <h1><%= resource.display_name %></h1>
+    <table>
+      <tbody>
+        <% children.each do |child| %>
+        <tr>
+          <td>
+            <a href="<%= child.url %>"><%= child.display_name %></a>
+          </td>
+          <td>
+            <%= child.collection? ? 'directory' : child.content_type %>
+          </td>
+          <td>
+            <%= number_to_human_size child.content_length %>
+          </td>
+          <td>
+            <%= time_tag child.last_modified %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Size</th>
+          <th>Last Modified</th>
+        </tr>
+      </thead>
+    </table>
+  </body>
+</html>
