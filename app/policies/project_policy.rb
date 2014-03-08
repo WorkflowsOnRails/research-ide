@@ -15,6 +15,7 @@ class ProjectPolicy < ApplicationPolicy
     project.owned_by? user
   end
 
+  alias_method :update?, :edit?
   alias_method :enter_state?, :edit?
   alias_method :destroy?, :edit?
   alias_method :add_participant?, :edit?

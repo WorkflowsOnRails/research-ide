@@ -30,9 +30,11 @@ class AttachmentsController < ApplicationController
   def destroy
     attachment = Attachment.find(params[:id])
     authorize attachment
+    task = attachment.task #get the task so it can render the correct page when deleted
+    file_name = attachment.file_file_name #to store name for the flash display later
     attachment.destroy
 
-    flash[:notice] = "#{attachment.file_file_name} was deleted"
+    flash[:notice] = "#{file_name} was deleted"
     redirect_to task_path(task)
   end
 
