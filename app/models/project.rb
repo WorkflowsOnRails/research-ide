@@ -115,7 +115,7 @@ class Project < ActiveRecord::Base
 
     if events.empty?
       current_state = self.aasm.current_state
-      raise RuntimeError,
+      raise AASM::InvalidTransition,
             "No transition found from #{current_state} to #{next_state}"
     end
 

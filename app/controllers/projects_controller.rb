@@ -55,7 +55,7 @@ class ProjectsController < ApplicationController
 
     begin
       @project.enter_state(next_state)
-    rescue
+    rescue AASM::InvalidTransition
       flash[:error] = "You cannot go to #{next_state} from current state!"
     end
 
