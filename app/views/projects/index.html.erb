@@ -8,80 +8,21 @@
 </h2>
 
 <p>
-  Recens nec extendi cepit lucis coegit aquae super peregrinum media dextra
-  deerat terras calidis securae ultima totidem lucis locavit arce nisi mare
-  nubes corpora pulsant.
+  Active projects are incomplete and can be edited in their current state.
 </p>
 
-<table class="table table-striped projects-table">
-  <tbody>
-    <% @projects.each do |project| %>
-      <tr>
-        <td class="projects-table-name">
-          <%= link_to project.name, project %>
-        </td>
-        <td class="projects-table-status">
-          <%= project.aasm.human_state %>
-        </td>
-        <td class="projects-table-last-modified">
-          <%= local_time_ago project.updated_at %> by
-          <%= mail_to project.last_updater.email,
-                      project.last_updater.full_name %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-
-  <thead>
-    <tr>
-      <th class="projects-table-name">Project</th>
-      <th class="projects-table-status">Status</th>
-      <th class="projects-table-last-modified">Last Modified</th>
-    </tr>
-  </thead>
-</table>
+<%= render partial: 'table', locals: {projects: @active_projects} %>
 
 
 <h2>Dormant Projects</h2>
 
 <p>
-  Alta frigida nitidis indigestaque dissaepserat tepescunt indigestaque semine
-  caecoque praecipites conversa nisi carentem sic facientes aera derecti vis
-  freta mundum.
+  Dormant projects are either complete, or waiting for action by another
+  collaborator.
 </p>
 
-<table class="table table-striped projects-table">
-  <tbody>
-    <tr>
-      <td class="projects-table-name">Dissecting Extreme Programming</td>
-      <td class="projects-table-status">Completed</td>
-      <td class="projects-table-last-modified">1 month ago by Brendan MacDonell</td>
-    </tr>
-    <tr>
-      <td>Integrating Caching Considerations with Compilation</td>
-      <td>Reviewing Literature</td>
-      <td>2 weeks ago by Aaron Stone</td>
-    </tr>
-    <tr>
-      <td>Large-scale, Highly-Available Wireless Sensor Networks</td>
-      <td>Completed</td>
-      <td>5 months ago by Sharon Douglas</td>
-    </tr>
-    <tr>
-      <td>The Application of Stochastic Properties to Networking</td>
-      <td>Completed</td>
-      <td>2 weeks ago by John Smith</td>
-    </tr>
-  </tbody>
+<%= render partial: 'table', locals: {projects: @inactive_projects} %>
 
-  <thead>
-    <tr>
-      <th>Project</th>
-      <th>Status</th>
-      <th>Last Modified</th>
-    </tr>
-  </thead>
-</table>
 
 <div class="alert alert-subdued">
   Did you know that you can create and edit attachments and tasks without a

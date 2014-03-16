@@ -1,0 +1,34 @@
+<table class="table table-striped projects-table">
+  <tbody>
+    <% projects.each do |project| %>
+      <tr>
+        <td class="projects-table-name">
+          <%= link_to project.name, project %>
+        </td>
+        <td class="projects-table-status">
+          <%= project.aasm.human_state %>
+        </td>
+        <td class="projects-table-last-modified">
+          <%= local_time_ago project.updated_at %> by
+          <%= mail_to project.last_updater.email,
+                      project.last_updater.full_name %>
+        </td>
+      </tr>
+    <% end %>
+    <% if projects.empty? %>
+      <tr>
+        <td class="projects-table-empty-message" colspan="3">
+          There are no such projects to display.
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+
+  <thead>
+    <tr>
+      <th class="projects-table-name">Project</th>
+      <th class="projects-table-status">Status</th>
+      <th class="projects-table-last-modified">Last Modified</th>
+    </tr>
+  </thead>
+</table>

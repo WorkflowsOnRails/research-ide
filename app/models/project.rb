@@ -127,9 +127,35 @@ class Project < ActiveRecord::Base
     self.save!
   end
 
+  def self.active_for(user)
+    find_by_sql [<<-eos, {user_id: user.id, writer_role: Task::ROLE.EDITOR}]
+      select projects.*
+      from projects
+      left outer join roles on
+        roles.resource_id = projects.id and
+        roles.resource_type = 'Project' and
+        roles.name = projects.aasm_state and
+        roles.user_id = :user_id
+      where
+        projects.aasm_state != 'completed' and
+        (
+          projects.owner_id = :user_id
+          or
+          roles.value = :writer_role
+        )
+    eos
+  end
+
+  def self.inactive_for(user)
+    self.all - self.active_for(user).to_a
+  end
+
   private
 
   def create_task_for_new_state
     Task.create_for_project_state(self, self.owner)
+  end
+
+  def self.active_for_user(user)
   end
 end

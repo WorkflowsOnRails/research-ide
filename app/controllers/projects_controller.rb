@@ -1,7 +1,12 @@
 class ProjectsController < ApplicationController
 
   def index
-    @projects = Project.all.includes(:last_updater)
+    @active_projects = Project.active_for(current_user)
+    @inactive_projects = Project.inactive_for(current_user)
+
+    [@active_projects, @inactive_projects].each do |projects|
+      ActiveRecord::Associations::Preloader.new(projects, :last_updater).run
+    end
   end
 
   def show
