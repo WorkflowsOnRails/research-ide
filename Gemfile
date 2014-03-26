@@ -44,9 +44,8 @@ gem 'foreman'
 
 group :development do
   gem 'aasm_statecharts',
-      path: '../aasm_statecharts/'
-      #git: 'https://github.com/WorkflowsOnRails/aasm_statecharts.git',
-      #branch: 'master'
+      git: 'https://github.com/WorkflowsOnRails/aasm_statecharts.git',
+      branch: 'master'
 end
 
 group :development, :test do
@@ -67,6 +66,7 @@ end
 gem 'annotate', '>=2.5.0', group: :development
 
 group :development do
+  gem 'highline'    # suppress echoing passwords in plaintext
   gem 'capistrano'
   gem 'capistrano-bundler'
   gem 'capistrano-rails'

@@ -1,0 +1,44 @@
+[unix_http_server]
+file=/srv/fourth-year-project-system/supervisor.sock
+
+[supervisord]
+logfile=/srv/fourth-year-project-system/supervisord.log
+logfile_maxbytes=50MB
+logfile_backups=10
+loglevel=error
+pidfile=/srv/fourth-year-project-system/supervisord.pid
+nodaemon=false
+minfds=1024
+minprocs=200
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
+
+[supervisorctl]
+serverurl=unix:///tmp/supervisor_fourth-year-project-system.sock
+
+<%
+app_names = []
+engine.each_process do |name, process|
+  1.upto(engine.formation[name]) do |num|
+    port = engine.port_for(process, num)
+    full_name = "#{app}-#{name}-#{num}"
+    environment = engine.env.merge("PORT" => port.to_s).map do |key, value|
+      "#{key}=#{shell_quote(value)}"
+    end
+    app_names << full_name
+%>
+[program:<%= full_name %>]
+command=<%= process.command %>
+autostart=true
+autorestart=true
+stopsignal=QUIT
+log=<%= log %>
+directory=<%= engine.root %>
+environment=<%= environment.join(',') %><%
+  end
+end
+%>
+
+[group:<%= app %>]
+programs=<%= app_names.join(',') %>
