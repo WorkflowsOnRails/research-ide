@@ -9,6 +9,16 @@ GIT
       sass-rails (~> 4.0)
 
 GIT
+  remote: https://github.com/WorkflowsOnRails/aasm_statecharts.git
+  revision: 1160c3fe143a66c07d68edad7867cfdb50d0df8a
+  branch: master
+  specs:
+    aasm_statecharts (1.0.0)
+      aasm (~> 3.0)
+      rails (~> 4.0)
+      ruby-graphviz (~> 1.0)
+
+GIT
   remote: https://github.com/WorkflowsOnRails/rack_dav.git
   revision: bc344eaed13068960ecd606aaa2e88e96470542f
   branch: bc344eaed13068960ecd606aaa2e88e96470542f
@@ -16,14 +26,6 @@ GIT
     rack_dav (0.3.1)
       nokogiri
       rack (>= 1.4.0)
-
-PATH
-  remote: ../aasm_statecharts/
-  specs:
-    aasm_statecharts (1.0.0)
-      aasm (~> 3.0)
-      rails (~> 4.0)
-      ruby-graphviz (~> 1.0)
 
 GEM
   remote: https://rubygems.org/
