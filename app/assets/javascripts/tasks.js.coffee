@@ -15,6 +15,9 @@ PREVIEW_CONTENT_SELECTOR = '#task-body-preview-content'
 EDIT_LINK_SELECTOR = '#task-body-edit-link'
 PREVIEW_LINK_SELECTOR = '#task-body-preview-link'
 
+$(document).ready () ->
+  MathJax.Hub.Queue(["Typeset", MathJax.Hub])
+
 showPreview = (html) ->
   $(PAGE_BODY_SELECTOR).addClass('preview')
   $(PREVIEW_CONTENT_SELECTOR).empty().append($(html))
