@@ -147,7 +147,20 @@ class Project < ActiveRecord::Base
   end
 
   def self.inactive_for(user)
-    self.all - self.active_for(user).to_a
+    all_projects = find_by_sql [<<-eos, {user_id: user.id}]
+      select projects.*
+      from projects
+      where
+        projects.owner_id = :user_id or
+        exists (
+          select 1 from projects_users
+          where
+            projects_users.project_id = projects.id and
+            projects_users.user_id = :user_id
+        )
+    eos
+    active_projects = self.active_for(user).to_a
+    all_projects - active_projects
   end
 
   private
