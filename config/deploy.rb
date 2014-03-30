@@ -37,6 +37,8 @@ namespace :deploy do
     end
   end
 
+  after 'deploy:foreman', 'deploy:restart'
+
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
       # Here we can do anything such as:
