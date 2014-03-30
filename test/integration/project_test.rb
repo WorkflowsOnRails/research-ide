@@ -30,18 +30,14 @@ class CreateProjectTest < ActiveSupport::TestCase
     login_user    
     create_project
 
-=begin
-  TODO: figure out how this is supposed to be done... cant submit it
-
     #add attachment
-    file = 'project_test.rb'
-    attach_file('task-attachments-upload-field', File.join(Rails.root, '/test/integration/project_test.rb'))
-    assert page.has_content?('project_test.rb was successfully uploaded')
+    attach_file('task-attachments-upload-field', File.join(Rails.root, "/test/integration/project_test.rb"))
+    find("#new_attachment").submit_form!
+    assert page.has_content?("project_test.rb was successfully uploaded")
 
     #delete attachment
-    #click_on 'delete'
-    #assert page.has_content?('#{file} was deleted ')
-=end
+    click_on 'delete'
+    assert page.has_content?("project_test.rb was deleted")
 
     #edit -> preview -> save
     edit_text = Random.alphanumeric
@@ -91,7 +87,14 @@ class CreateProjectTest < ActiveSupport::TestCase
     create_project
     click_on 'Literature Review'
 
-    #TODO: attachment tests
+    #add attachment
+    attach_file('task-attachments-upload-field', File.join(Rails.root, "/test/integration/project_test.rb"))
+    find("#new_attachment").submit_form!
+    assert page.has_content?("project_test.rb was successfully uploaded")
+
+    #delete attachment
+    click_on 'delete'
+    assert page.has_content?("project_test.rb was deleted")
 
     #edit -> preview -> save
     edit_text = Random.alphanumeric
@@ -137,7 +140,14 @@ class CreateProjectTest < ActiveSupport::TestCase
     click_on 'Literature Review'
     click_on 'Method'
 
-    #TODO: attachment tests
+    #add attachment
+    attach_file('task-attachments-upload-field', File.join(Rails.root, "/test/integration/project_test.rb"))
+    find("#new_attachment").submit_form!
+    assert page.has_content?("project_test.rb was successfully uploaded")
+
+    #delete attachment
+    click_on 'delete'
+    assert page.has_content?("project_test.rb was deleted")
 
     #edit -> preview -> save
     edit_text = Random.alphanumeric
@@ -179,7 +189,14 @@ class CreateProjectTest < ActiveSupport::TestCase
     click_on 'Method'
     click_on 'Results'
 
-    #TODO: attachment tests
+    #add attachment
+    attach_file('task-attachments-upload-field', File.join(Rails.root, "/test/integration/project_test.rb"))
+    find("#new_attachment").submit_form!
+    assert page.has_content?("project_test.rb was successfully uploaded")
+
+    #delete attachment
+    click_on 'delete'
+    assert page.has_content?("project_test.rb was deleted")
 
     #edit -> preview -> save
     edit_text = Random.alphanumeric
@@ -217,7 +234,14 @@ class CreateProjectTest < ActiveSupport::TestCase
     click_on 'Results'
     click_on 'Analysis'
 
-    #TODO: attachment tests
+    #add attachment
+    attach_file('task-attachments-upload-field', File.join(Rails.root, "/test/integration/project_test.rb"))
+    find("#new_attachment").submit_form!
+    assert page.has_content?("project_test.rb was successfully uploaded")
+
+    #delete attachment
+    click_on 'delete'
+    assert page.has_content?("project_test.rb was deleted")
 
     #edit -> preview -> save
     edit_text = Random.alphanumeric
@@ -251,7 +275,14 @@ class CreateProjectTest < ActiveSupport::TestCase
     click_on 'Analysis'
     click_on 'Conclusions'
 
-    #TODO: attachment tests
+    #add attachment
+    attach_file('task-attachments-upload-field', File.join(Rails.root, "/test/integration/project_test.rb"))
+    find("#new_attachment").submit_form!
+    assert page.has_content?("project_test.rb was successfully uploaded")
+
+    #delete attachment
+    click_on 'delete'
+    assert page.has_content?("project_test.rb was deleted")
 
     #edit -> preview -> save
     edit_text = Random.alphanumeric
@@ -281,7 +312,14 @@ class CreateProjectTest < ActiveSupport::TestCase
     click_on 'Conclusions'
     click_on 'Completed'
 
-    #TODO: attachment tests
+    #add attachment
+    attach_file('task-attachments-upload-field', File.join(Rails.root, "/test/integration/project_test.rb"))
+    find("#new_attachment").submit_form!
+    assert page.has_content?("project_test.rb was successfully uploaded")
+
+    #delete attachment
+    click_on 'delete'
+    assert page.has_content?("project_test.rb was deleted")
 
     #edit -> preview -> save
     edit_text = Random.alphanumeric
